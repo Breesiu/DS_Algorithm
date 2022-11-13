@@ -25,7 +25,7 @@ class GMM2d():
 
     def GMM_sklearn(self, x):
         model = GaussianMixture(n_components=2,
-                                variance_type='full',
+                                # variance_type='full',
                                 tol=0.01,
                                 max_iter=1000,
                                 weights_init=[1 - self.params['phi'], self.params['phi']],

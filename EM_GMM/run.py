@@ -46,18 +46,18 @@ if __name__ == '__main__':
     em_semisupervised = EM(params=learned_params)
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    unsupervised_forecasts, unsupervised_posterior, unsupervised_log_likelihoods = em_semisupervised.run_em(x_unlabeled)
+    semisupervised_forecasts, semisupervised_posterior, semisupervised_log_likelihoods = em_semisupervised.run_em(x_unlabeled)
     # visulization
     fig, axs = plt.subplots(1, 3, figsize=(24, 16))
     # fig,axes = plt.subplots( 2,2, [figsize=(width,height)] )
-    print("unsupervised_forecasts:{}, unsupervised_log_likelihoods:{}".format(unsupervised_forecasts, unsupervised_log_likelihoods))
+    # print("unsupervised_forecasts:{}, unsupervised_log_likelihoods:{}".format(semisupervised_forecasts, semisupervised_log_likelihoods))
 
     # plt.figure(figsize=(10, 10), dpi=500)
     column = ['unsupervised_log_likelihoods', 'Kmeans', 'GaussianMixture']
     for i in range(3):
         axs[i].set_title(column[i])
-    axs[0].plot(unsupervised_log_likelihoods)
-    axs[1].scatter(x_unlabeled[:, 0], x_unlabeled[:, 1], c=unsupervised_forecasts)
+    axs[0].plot(semisupervised_log_likelihoods)
+    axs[1].scatter(x_unlabeled[:, 0], x_unlabeled[:, 1], c=semisupervised_forecasts)
     plt.show()
     pass
 
@@ -68,8 +68,9 @@ if __name__ == '__main__':
     em_api = EM(params=learned_params)
     sklearn_forecasts, posterior_sklearn = em_api.GMM_sklearn(x_unlabeled)
     print("predict:", sklearn_forecasts)
+    # print('{},{},{},{}'.format(semisupervised_forecasts.shape, semisupervised_posterior[:, 1],sklearn_forecasts.shape, posterior_sklearn.shape))
     output_df = pd.DataFrame({'semisupervised_forecasts': semisupervised_forecasts,
-                              'semisupervised_posterior': semisupervised_posterior[:, 1],
+                              'semisupervised_posterior': semisupervised_posterior[1, :],
                               'sklearn_forecasts': sklearn_forecasts,
                               'posterior_sklearn': posterior_sklearn})
 
