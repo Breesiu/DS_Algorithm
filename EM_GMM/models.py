@@ -102,7 +102,7 @@ class EM(GMM2d):
         # print(self.params)
         # phi corresponds to the probability of the second gaussian
         unsupervised_log_likelihoods = []
-        for i in range(100):
+        for i in range(20):
             self.e_step(x)
             self.m_step(x)
         # predict
